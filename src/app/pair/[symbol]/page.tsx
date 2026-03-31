@@ -1,5 +1,7 @@
 "use client";
 
+export const runtime = 'edge';
+
 import { useTradingApi } from "@/hooks/useTradingApi";
 import { useApiKey } from "@/contexts/ApiKeyContext";
 import { useParams } from "next/navigation";
