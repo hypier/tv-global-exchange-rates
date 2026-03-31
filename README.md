@@ -1,5 +1,7 @@
 # Global Exchange Rates
 
+**预览网站**: https://forex.tradingviewapi.com/
+
 Global Exchange Rates is a modern TradingView-style forex and market dashboard built with Next.js. It provides a polished interface for browsing live exchange-rate data, market rankings, currency conversion, news, calendar views, and other related tools powered by the TradingView Data API on RapidAPI.
 
 ## Highlights
