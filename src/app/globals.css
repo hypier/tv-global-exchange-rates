@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  --color-fintech-bg: #0b1325;
+  --color-fintech-surface: #171f32;
+  --color-fintech-surface-hover: #222a3d;
+  --color-fintech-border: rgba(218, 226, 252, 0.1);
+  --color-fintech-primary: #b0c8eb;
+  --color-fintech-primary-light: #d2e4ff;
+  --color-fintech-primary-container: #0a2540;
+  --color-fintech-success: #4edea3;
+  --color-fintech-danger: #fc4563;
+  --color-fintech-text: #dae2fc;
+  --color-fintech-muted: #c4c6ce;
+
+  --color-surface-container-lowest: #060e20;
+  --color-surface-container-low: #131b2e;
+  --color-surface-container: #171f32;
+  --color-surface-container-high: #222a3d;
+  --color-surface-container-highest: #2d3448;
+  
+  --font-headline: "Manrope", "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "Fira Code", "JetBrains Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  
+  html, body {
+    @apply antialiased min-h-screen bg-fintech-bg text-fintech-text font-body;
+    box-sizing: border-box;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  ::selection {
+    @apply bg-fintech-primary/20 text-fintech-primary;
+  }
+}
+
+@layer utilities {
+  .institutional-card {
+    @apply bg-surface-container-low rounded-xl shadow-[0_40px_60px_-10px_rgba(49,72,101,0.06)] transition-all;
+  }
+
+  .glassmorphism {
+    @apply bg-[#0b1325]/60 backdrop-blur-md shadow-[0_40px_60px_-10px_rgba(49,72,101,0.06)];
+  }
+  
+  .glow-emerald {
+    text-shadow: 0 0 12px rgba(78, 222, 163, 0.4);
+  }
+  
+  .glow-rose {
+    text-shadow: 0 0 12px rgba(252, 69, 99, 0.4);
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-fintech-primary to-fintech-primary-light;
+  }
+
+  /* Blinking animation for value updates */
+  .flash-green {
+    animation: flashGreen 1s ease-out;
+  }
+  .flash-red {
+    animation: flashRed 1s ease-out;
+  }
+
+  @keyframes flashGreen {
+    0% { background-color: rgba(78, 222, 163, 0.2); color: #4edea3; }
+    100% { background-color: transparent; }
+  }
+
+  @keyframes flashRed {
+    0% { background-color: rgba(252, 69, 99, 0.2); color: #fc4563; }
+    100% { background-color: transparent; }
+  }
+}
