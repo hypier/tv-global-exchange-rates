@@ -19,6 +19,7 @@ interface QuoteData {
 
 import { getCurrencyFlagUrl } from "@/config/currencies";
 import { ALL_CURRENCIES as CURRENCIES } from "@/config/currencies";
+import { JsonLd } from "@/components/schema/JsonLd";
 
 function ConverterPageContent() {
   const { apiKey } = useApiKey();
@@ -202,6 +203,87 @@ function ConverterPageContent() {
           </AnimatePresence>
         </div>
       </div>
+
+      {/* FAQ Section */}
+      <div className="mt-16">
+        <h2 className="text-3xl font-headline font-bold text-fintech-text mb-8 text-center">Frequently Asked Questions</h2>
+        <div className="space-y-6">
+          {[
+            {
+              question: "How accurate are the exchange rates?",
+              answer: "Our exchange rates are sourced from TradingView's institutional-grade data feeds and updated in real-time. They reflect actual market rates with 5-decimal precision."
+            },
+            {
+              question: "Can I convert multiple currencies at once?",
+              answer: "Yes, our converter supports multi-currency conversion. You can quickly switch between any of the 150+ supported currencies."
+            },
+            {
+              question: "What is the conversion fee?",
+              answer: "Global Exchange is completely free to use. There are no conversion fees. You only need your own RapidAPI key to access the data."
+            }
+          ].map((faq, idx) => (
+            <div key={idx} className="bg-surface-container-low p-6 rounded-xl border border-white/5">
+              <h3 className="text-lg font-semibold text-fintech-text mb-2">{faq.question}</h3>
+              <p className="text-fintech-muted leading-relaxed">{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Schema.org Structured Data */}
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "Currency Converter",
+          "applicationCategory": "FinanceApplication",
+          "description": "Free real-time currency converter with live exchange rates",
+          "offers": {
+            "@type": "Offer",
+            "price": "0"
+          },
+          "featureList": [
+            "150+ currencies",
+            "Real-time rates",
+            "Instant conversion",
+            "Multi-currency support",
+            "Bid/ask spreads",
+            "Historical data"
+          ]
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How accurate are the exchange rates?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Our exchange rates are sourced from TradingView's institutional-grade data feeds and updated in real-time. They reflect actual market rates with 5-decimal precision."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I convert multiple currencies at once?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, our converter supports multi-currency conversion. You can quickly switch between any of the 150+ supported currencies."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the conversion fee?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Global Exchange is completely free to use. There are no conversion fees. You only need your own RapidAPI key to access the data."
+              }
+            }
+          ]
+        }}
+      />
     </div>
   );
 }

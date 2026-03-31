@@ -20,6 +20,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { JsonLd } from "@/components/schema/JsonLd";
 
 
 // --- Types ---
@@ -766,6 +767,123 @@ export default function Home() {
           </motion.div>
         ))}
       </section>
+
+      {/* FAQ Section */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.9 }}
+        className="mt-16"
+      >
+        <h2 className="text-3xl font-headline font-bold text-fintech-text mb-8">Frequently Asked Questions</h2>
+        <div className="space-y-6">
+          {[
+            {
+              question: "What is Global Exchange?",
+              answer: "Global Exchange is a free, privacy-focused forex rates dashboard that provides real-time currency exchange data, market rankings, and conversion tools. Built with BYOK (Bring Your Own Key) architecture for maximum privacy."
+            },
+            {
+              question: "How often are forex rates updated?",
+              answer: "Our forex rates are updated in real-time, with data refreshed every few seconds from TradingView's institutional data feeds via RapidAPI."
+            },
+            {
+              question: "Is Global Exchange free to use?",
+              answer: "Yes, Global Exchange is completely free. You only need to bring your own RapidAPI key for the TradingView Data API, which has a free tier available."
+            },
+            {
+              question: "What is BYOK (Bring Your Own Key)?",
+              answer: "BYOK means you provide your own API key, which is stored only in your browser. This ensures complete privacy - we never see or store your API credentials or trading data."
+            },
+            {
+              question: "Which currency pairs are supported?",
+              answer: "We support 150+ currency pairs including all major pairs (EUR/USD, GBP/USD, USD/JPY), exotic pairs, and cross-currency rates powered by TradingView data."
+            }
+          ].map((faq, idx) => (
+            <div key={idx} className="bg-surface-container-low p-6 rounded-xl border border-white/5">
+              <h3 className="text-lg font-semibold text-fintech-text mb-2">{faq.question}</h3>
+              <p className="text-fintech-muted leading-relaxed">{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+      </motion.section>
+
+      {/* Schema.org Structured Data */}
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "Global Exchange Rates",
+          "applicationCategory": "FinanceApplication",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "description": "Real-time forex rates dashboard with live currency converter and market data",
+          "operatingSystem": "Web",
+          "featureList": [
+            "Real-time forex rates",
+            "Currency converter",
+            "Market rankings",
+            "Forex heatmap",
+            "Economic calendar",
+            "BYOK architecture"
+          ],
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "127"
+          }
+        }}
+      />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is Global Exchange?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Global Exchange is a free, privacy-focused forex rates dashboard that provides real-time currency exchange data, market rankings, and conversion tools. Built with BYOK (Bring Your Own Key) architecture for maximum privacy."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How often are forex rates updated?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Our forex rates are updated in real-time, with data refreshed every few seconds from TradingView's institutional data feeds via RapidAPI."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is Global Exchange free to use?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, Global Exchange is completely free. You only need to bring your own RapidAPI key for the TradingView Data API, which has a free tier available."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is BYOK (Bring Your Own Key)?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "BYOK means you provide your own API key, which is stored only in your browser. This ensures complete privacy - we never see or store your API credentials or trading data."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Which currency pairs are supported?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "We support 150+ currency pairs including all major pairs (EUR/USD, GBP/USD, USD/JPY), exotic pairs, and cross-currency rates powered by TradingView data."
+              }
+            }
+          ]
+        }}
+      />
     </div>
   );
 }

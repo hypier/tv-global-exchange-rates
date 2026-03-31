@@ -1,0 +1,13 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://forex.tradingviewapi.com/sitemap.xml
+
+# Disallow admin or API routes if any
+# User-agent: *
+# Disallow: /api/

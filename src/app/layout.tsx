@@ -18,8 +18,44 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Global Exchange | Institutional Dashboard",
-  description: "Secure, privacy-focused forex terminal powered by RapidAPI and TradingView data. Enterprise-grade BYOK architecture.",
+  title: "Real-Time Forex Rates Dashboard | Live Currency Exchange Data",
+  description: "Free real-time forex rates dashboard with live currency converter, market rankings, and heatmap. Privacy-focused BYOK platform powered by TradingView data API. Track 150+ currency pairs.",
+  keywords: "forex rates, currency converter, live exchange rates, forex dashboard, real-time forex data, BYOK forex platform, TradingView forex",
+  openGraph: {
+    title: "Real-Time Forex Rates Dashboard | Global Exchange",
+    description: "Free real-time forex rates dashboard with live currency converter and market data. Privacy-focused BYOK platform.",
+    type: "website",
+    url: "https://forex.tradingviewapi.com",
+    siteName: "Global Exchange",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Global Exchange - Real-Time Forex Rates Dashboard",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Real-Time Forex Rates Dashboard | Global Exchange",
+    description: "Free real-time forex rates dashboard with live currency converter and market data.",
+    images: ["/twitter-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: "https://forex.tradingviewapi.com",
+  },
 };
 
 export default function RootLayout({
