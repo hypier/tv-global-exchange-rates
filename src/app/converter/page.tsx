@@ -1,7 +1,7 @@
 "use client";
 
 import { useTradingApi } from "@/hooks/useTradingApi";
-import { useState, useMemo } from "react";
+import { useState, useMemo, Suspense } from "react";
 import Image from "next/image";
 import { ArrowLeftRight, Loader2, ArrowRight, LineChart } from "lucide-react";
 import Link from "next/link";
@@ -20,7 +20,7 @@ interface QuoteData {
 import { getCurrencyFlagUrl } from "@/config/currencies";
 import { ALL_CURRENCIES as CURRENCIES } from "@/config/currencies";
 
-export default function ConverterPage() {
+function ConverterPageContent() {
   const { apiKey } = useApiKey();
   const searchParams = useSearchParams();
   
@@ -203,5 +203,31 @@ export default function ConverterPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+function ConverterPageFallback() {
+  return (
+    <div className="max-w-3xl mx-auto py-8 px-6">
+      <div className="text-center mb-10">
+        <h1 className="text-4xl font-headline font-extrabold text-fintech-text mb-3">Currency Converter</h1>
+        <p className="text-fintech-muted font-medium">Live exchange rates updated in real-time from institutional feeds.</p>
+      </div>
+
+      <div className="institutional-card p-6 md:p-10 relative overflow-hidden bg-surface-container-low border border-white/5 min-h-[420px] flex items-center justify-center">
+        <div className="flex flex-col items-center text-fintech-muted">
+          <Loader2 className="w-8 h-8 text-fintech-primary animate-spin mb-3" />
+          <span className="text-[10px] font-bold tracking-widest uppercase">Initializing converter...</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function ConverterPage() {
+  return (
+    <Suspense fallback={<ConverterPageFallback />}>
+      <ConverterPageContent />
+    </Suspense>
   );
 }
