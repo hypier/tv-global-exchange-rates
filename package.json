@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "pages:build": "npx @opennextjs/cloudflare build",
+    "pages:build": "npx @opennextjs/cloudflare build && node scripts/fix-symlinks.js",
     "pages:deploy": "pnpm pages:build && wrangler pages deploy .open-next --project-name tv-global-exchange-rates",
     "pages:dev": "npx @opennextjs/cloudflare preview"
   },
