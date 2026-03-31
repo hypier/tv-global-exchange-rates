@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Manrope, Inter } from "next/font/google";
 import "./globals.css";
 import { ApiKeyProvider } from "@/contexts/ApiKeyContext";
@@ -65,6 +66,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${manrope.variable} ${inter.variable}`} suppressHydrationWarning>
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-DQN32Q764T"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-DQN32Q764T');
+          `}
+        </Script>
+      </head>
       <body className="font-body bg-fintech-bg text-fintech-text min-h-screen flex flex-col">
         <QueryProvider>
           <ApiKeyProvider>
