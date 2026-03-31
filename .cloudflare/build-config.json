@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developers.cloudflare.com/pages/platform/build-configuration/#build-configuration-schema",
+  "build": {
+    "command": "pnpm pages:build",
+    "cwd": "/",
+    "output": ".open-next"
+  }
+}

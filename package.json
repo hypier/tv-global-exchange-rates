@@ -7,9 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "pages:build": "npx @opennextjs/cloudflare",
-    "pages:deploy": "pnpm pages:build && wrangler pages deploy",
-    "pages:dev": "wrangler pages dev .open-next/worker.js --compatibility-date=2024-09-02 --compatibility-flag=nodejs_compat"
+    "pages:build": "npx @opennextjs/cloudflare build",
+    "pages:deploy": "pnpm pages:build && wrangler pages deploy .open-next --project-name tv-global-exchange-rates",
+    "pages:dev": "npx @opennextjs/cloudflare preview"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
