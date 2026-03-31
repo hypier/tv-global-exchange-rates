@@ -1,7 +1,7 @@
-name = "global-exchange-rates"
+name = "tv-global-exchange-rates"
 compatibility_date = "2024-09-02"
 compatibility_flags = ["nodejs_compat"]
-pages_build_output_dir = ".open-next/worker"
+pages_build_output_dir = ".open-next"
 
 [observability]
 enabled = true
