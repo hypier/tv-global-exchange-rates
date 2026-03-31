@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "pages:build": "npx @opennextjs/cloudflare build",
-    "pages:deploy": "npx @opennextjs/cloudflare deploy --project-name tv-global-exchange-rates",
+    "pages:deploy": "pnpm pages:build && wrangler deploy",
     "pages:dev": "npx @opennextjs/cloudflare preview"
   },
   "dependencies": {
