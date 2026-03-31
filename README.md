@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Global Exchange Rates
+
+Global Exchange Rates is a modern TradingView-style forex and market dashboard built with Next.js. It provides a polished interface for browsing live exchange-rate data, market rankings, currency conversion, news, calendar views, and other related tools powered by the TradingView Data API on RapidAPI.
+
+## Highlights
+
+- Real-time forex and market data UI
+- Bring-your-own-key (BYOK) API workflow
+- TradingView-powered market data integration
+- Currency converter and quick query tools
+- Market rankings and leaderboard views
+- Calendar, heatmap, and news pages
+- Responsive dashboard layout for desktop and mobile
+
+## Tech Stack
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- TanStack Query
+- Framer Motion
+- Headless UI
+- Lucide React
+
+## How API Access Works
+
+This app is designed around a BYOK model:
+
+- You provide your own RapidAPI key for the TradingView Data API
+- The key is stored in the browser via `localStorage`
+- Client-side requests are sent directly to the TradingView Data API endpoint on RapidAPI
+- No server-side secret management is included in this app by default
+
+Current local storage key:
+
+```text
+tradingview_api_key_v2
+```
+
+Validation is performed against:
+
+```text
+https://tradingview-data1.p.rapidapi.com/health
+```
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Start the development server
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open `http://localhost:3000` in your browser.
 
-## Learn More
+### 3. Add your API key
 
-To learn more about Next.js, take a look at the following resources:
+After the app loads:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Open the settings modal
+- Paste your RapidAPI key for the TradingView Data API
+- Let the app validate the key
+- Start exploring the dashboard pages
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Available Scripts
 
-## Deploy on Vercel
+```bash
+pnpm dev
+pnpm build
+pnpm start
+pnpm lint
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Main Pages
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `/` - Landing dashboard with market widgets and quick rate query
+- `/rankings` - Market and leaderboard views
+- `/query` - Direct symbol or data queries
+- `/converter` - Currency conversion tools
+- `/calendar` - Calendar-oriented market data view
+- `/heatmap` - Heatmap visualization
+- `/news` - News interface
+
+## Project Structure
+
+```text
+src/
+  app/
+    page.tsx
+    rankings/
+    query/
+    converter/
+    calendar/
+    heatmap/
+    news/
+  components/
+    layout/
+  config/
+    currencies.ts
+  contexts/
+    ApiKeyContext.tsx
+    QueryProvider.tsx
+  hooks/
+    useTradingApi.ts
+  lib/
+    utils.ts
+```
+
+## Notes for Development
+
+- API requests depend on a valid RapidAPI key being present in local storage
+- This project is centered around TradingView market data consumption via RapidAPI
+- Data fetching is handled with TanStack Query
+- Animations and transitions are implemented with Framer Motion
+- The UI is optimized for a dashboard-style trading experience
+
+## Security Note
+
+Because this project currently uses a client-side BYOK approach, API keys are managed in the browser instead of on a backend. That is convenient for local tools and personal dashboards, but if you plan to ship this to end users, you should review whether a server-side proxy or stronger key-handling strategy is more appropriate.
+
+## License
+
+Add your preferred license information here if this project is intended for public distribution.
