@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
 type Props = {
-  params: { symbol: string };
+  params: Promise<{ symbol: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const symbol = decodeURIComponent(params.symbol);
+  const symbol = decodeURIComponent((await params).symbol);
   
   // 解析货币对
   const cleanSymbol = symbol.replace("FX_IDC:", "");

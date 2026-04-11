@@ -1,17 +1,16 @@
 "use client";
 
-export const runtime = 'edge';
-
 import { useTradingApi } from "@/hooks/useTradingApi";
 import { useApiKey } from "@/contexts/ApiKeyContext";
 import { useParams } from "next/navigation";
-import { useMemo, useEffect, useRef, useState, useCallback } from "react";
-import { createChart, ColorType, CandlestickSeries, UTCTimestamp } from "lightweight-charts";
+import { useMemo, useEffect, useRef, useState } from "react";
 import { Loader2, TrendingUp, TrendingDown, ArrowLeftRight, X, ExternalLink, Heart, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+
+type UTCTimestamp = number;
 
 interface QuoteData {
   lp?: number;
@@ -360,8 +359,8 @@ function IdeaDetailModal({ idea, imageUrl, onClose }: { idea: IdeaItem; imageUrl
 function CandlestickChart({ symbol }: { symbol: string }) {
   const { apiKey } = useApiKey();
   const chartContainerRef = useRef<HTMLDivElement>(null);
-  const chartRef = useRef<ReturnType<typeof createChart> | null>(null);
-  const seriesRef = useRef<ReturnType<ReturnType<typeof createChart>["addSeries"]> | null>(null);
+  const chartRef = useRef<any>(null);
+  const seriesRef = useRef<any>(null);
 
   const { data, isLoading } = useTradingApi<PriceResponse>(
     `/api/price/${symbol}`,
@@ -385,53 +384,60 @@ function CandlestickChart({ symbol }: { symbol: string }) {
   useEffect(() => {
     if (!chartContainerRef.current || candles.length === 0) return;
 
-    if (!chartRef.current) {
-      const chart = createChart(chartContainerRef.current, {
-        layout: {
-          background: { type: ColorType.Solid, color: "#131b2e" },
-          textColor: "#c4c6ce",
-        },
-        grid: {
-          vertLines: { color: "rgba(255,255,255,0.04)" },
-          horzLines: { color: "rgba(255,255,255,0.04)" },
-        },
-        crosshair: { mode: 1 },
-        rightPriceScale: { borderColor: "rgba(255,255,255,0.1)" },
-        timeScale: { borderColor: "rgba(255,255,255,0.1)", timeVisible: true },
-        width: chartContainerRef.current.clientWidth,
-        height: 288,
-      });
+    const initChart = async () => {
+      const { createChart, ColorType } = await import("lightweight-charts");
 
-      seriesRef.current = chart.addSeries(CandlestickSeries, {
-        upColor: "#4edea3",
-        downColor: "#fc4563",
-        borderUpColor: "#4edea3",
-        borderDownColor: "#fc4563",
-        wickUpColor: "#4edea3",
-        wickDownColor: "#fc4563",
-      });
+      if (!chartRef.current) {
+        const chart = createChart(chartContainerRef.current!, {
+          layout: {
+            background: { type: ColorType.Solid, color: "#131b2e" },
+            textColor: "#c4c6ce",
+          },
+          grid: {
+            vertLines: { color: "rgba(255,255,255,0.04)" },
+            horzLines: { color: "rgba(255,255,255,0.04)" },
+          },
+          crosshair: { mode: 1 },
+          rightPriceScale: { borderColor: "rgba(255,255,255,0.1)" },
+          timeScale: { borderColor: "rgba(255,255,255,0.1)", timeVisible: true },
+          width: chartContainerRef.current!.clientWidth,
+          height: 288,
+        });
 
-      chartRef.current = chart;
+        const { CandlestickSeries } = await import("lightweight-charts");
+        seriesRef.current = chart.addSeries(CandlestickSeries, {
+          upColor: "#4edea3",
+          downColor: "#fc4563",
+          borderUpColor: "#4edea3",
+          borderDownColor: "#fc4563",
+          wickUpColor: "#4edea3",
+          wickDownColor: "#fc4563",
+        });
 
-      const handleResize = () => {
-        if (chartContainerRef.current && chartRef.current) {
-          chartRef.current.applyOptions({ width: chartContainerRef.current.clientWidth });
-        }
-      };
-      window.addEventListener("resize", handleResize);
-    }
+        chartRef.current = chart;
 
-    const sorted = [...candles].sort((a, b) => a.time - b.time);
-    seriesRef.current?.setData(
-      sorted.map(c => ({
-        time: c.time as UTCTimestamp,
-        open: c.open,
-        high: c.high,
-        low: c.low,
-        close: c.close,
-      }))
-    );
-    chartRef.current?.timeScale().fitContent();
+        const handleResize = () => {
+          if (chartContainerRef.current && chartRef.current) {
+            chartRef.current.applyOptions({ width: chartContainerRef.current.clientWidth });
+          }
+        };
+        window.addEventListener("resize", handleResize);
+      }
+
+      const sorted = [...candles].sort((a, b) => a.time - b.time);
+      seriesRef.current?.setData(
+        sorted.map(c => ({
+          time: c.time as UTCTimestamp,
+          open: c.open,
+          high: c.high,
+          low: c.low,
+          close: c.close,
+        }))
+      );
+      chartRef.current?.timeScale().fitContent();
+    };
+
+    initChart();
   }, [candles]);
 
   // Cleanup on unmount
